@@ -1,0 +1,65 @@
+# setup
+setup: scan
+
+
+train_dir: euroSAT
+
+# Loss
+criterion: scan
+criterion_kwargs:
+   entropy_weight: 5.0
+
+# Weight update
+update_cluster_head_only: False # Update full network in SCAN
+num_heads: 1 # Only use one head
+
+# Model
+backbone: resnet18
+
+# Dataset
+train_db_name: euroSAT
+val_db_name: euroSAT
+num_classes: 10
+num_neighbors: 10
+
+
+ 
+# Transformations
+augmentation_strategy: simclr 
+augmentation_kwargs:
+   random_resized_crop:
+      size: 64
+      scale: [0.2, 1.0]
+   color_jitter_random_apply:
+      p: 0.8
+   color_jitter:
+      brightness: 0.4
+      contrast: 0.4
+      saturation: 0.4
+      hue: 0.1
+   random_grayscale: 
+      p: 0.2
+   normalize:
+      mean: [0.4914, 0.4822, 0.4465]
+      std: [0.2023, 0.1994, 0.2010]
+ 
+transformation_kwargs:
+   crop_size: 64
+   normalize:
+      mean: [0.4914, 0.4822, 0.4465]
+      std: [0.2023, 0.1994, 0.2010]
+
+
+
+
+# Hyperparameters
+optimizer: adam
+optimizer_kwargs:
+   lr: 0.00001
+#weight_decay: 0.0001
+epochs: 3
+batch_size: 128
+num_workers: 8
+
+# Scheduler
+scheduler: constant

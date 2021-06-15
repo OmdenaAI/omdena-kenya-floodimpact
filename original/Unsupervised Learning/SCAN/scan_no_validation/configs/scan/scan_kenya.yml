@@ -1,0 +1,64 @@
+# setup
+setup: scan
+
+train_dir: kenyaModel
+
+
+# Loss
+criterion: scan
+criterion_kwargs:
+   entropy_weight: 10.0
+
+# Weight update
+update_cluster_head_only: False # Update full network in SCAN
+num_heads: 1 # Only use one head
+
+# Model
+backbone: resnet18
+
+# Dataset
+train_db_name: KenyaDataset
+num_classes: 8
+num_neighbors: 5
+
+
+ 
+# Transformations
+augmentation_strategy: simclr 
+augmentation_kwargs:
+   random_resized_crop:
+      size: 153
+      scale: [0.2, 1.0]
+   color_jitter_random_apply:
+      p: 0.8
+   color_jitter:
+      brightness: 0.4
+      contrast: 0.4
+      saturation: 0.4
+      hue: 0.1
+   random_grayscale: 
+      p: 0.2
+   normalize:
+      mean: [0.4914, 0.4822, 0.4465]
+      std: [0.2023, 0.1994, 0.2010]
+ 
+transformation_kwargs:
+   crop_size: 153
+   normalize:
+      mean: [0.4914, 0.4822, 0.4465]
+      std: [0.2023, 0.1994, 0.2010]
+
+
+
+
+# Hyperparameters
+optimizer: adam
+optimizer_kwargs:
+   lr: 0.0001
+#weight_decay: 0.0001
+epochs: 103
+batch_size: 32
+num_workers: 8
+
+# Scheduler
+scheduler: constant

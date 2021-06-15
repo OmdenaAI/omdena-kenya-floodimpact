@@ -1,0 +1,59 @@
+# setup
+setup: selflabel
+
+#save dir
+train_dir: euroSAT
+
+# ema
+use_ema: False
+
+# Threshold
+confidence_threshold: 0.99
+
+# Criterion
+criterion: confidence-cross-entropy
+criterion_kwargs:
+   apply_class_balancing: True
+
+# Model
+backbone: resnet18
+num_heads: 1
+
+# Dataset
+train_db_name: euroSAT
+val_db_name: euroSAT
+num_classes: 10
+
+# Transformations
+augmentation_strategy: ours 
+augmentation_kwargs:
+   crop_size: 64
+   normalize:
+      mean: [0.3444, 0.3803, 0.4078]
+      std: [0.2509, 0.1718, 0.1458]
+   num_strong_augs: 4
+   cutout_kwargs:
+     n_holes: 1
+     length: 16
+     random: True
+
+transformation_kwargs:
+   crop_size: 64
+   normalize:
+      mean: [0.3444, 0.3803, 0.4078]
+      std: [0.2509, 0.1718, 0.1458]
+
+
+# Hyperparameters
+optimizer: sgd
+optimizer_kwargs:
+   lr: 0.0001
+   weight_decay: 0.0
+   nesterov: False
+   momentum: 0.9
+epochs: 25
+batch_size: 512
+num_workers: 8
+
+# Scheduler
+scheduler: constant 

@@ -1,0 +1,64 @@
+# setup
+setup: selflabel
+
+train_dir: KenyaModel_6CLS_153_exp
+
+
+# Threshold
+confidence_threshold: 0.99
+
+# EMA
+use_ema: False
+ema_alpha: 0.999
+
+# Loss
+criterion: confidence-cross-entropy
+criterion_kwargs:
+   apply_class_balancing: False
+
+# Model
+backbone: resnet18
+num_heads: 1
+
+# Dataset
+train_db_name: KenyaDataset
+num_classes: 6
+
+# Transformations
+augmentation_strategy: custom_aug
+augmentation_kwargs:
+   random_resized_crop:
+      size: 153
+      scale: [0.5, 1.0]
+      ratio: [0.75,1.3333]
+   color_jitter_random_apply:
+      p: 0.8
+   color_jitter:
+      brightness: [0.5,2]
+      contrast: [2,7]
+      saturation: 0
+      hue: 0
+   normalize:
+      mean: [0.4049, 0.3090, 0.2831]
+      std: [0.2702, 0.1792, 0.1679]
+
+transformation_kwargs:
+   crop_size: 153
+   normalize:
+      mean: [0.4049, 0.3090, 0.2831]
+      std: [0.2702, 0.1792, 0.1679]
+
+
+# Hyperparameters
+optimizer: sgd
+optimizer_kwargs:
+   lr: 0.0001
+   weight_decay: 0.0
+   nesterov: False
+   momentum: 0.9
+epochs: 50
+batch_size: 32
+num_workers: 8
+
+# Scheduler
+scheduler: constant 
