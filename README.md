@@ -70,7 +70,7 @@ cd omdena-kenya-floodimpact
 ```
 code .
 ```
-- To open with jupyter notebook (or maually open using jupyter notebook app)
+- To open with Jupyter Notebook (or manually open using Jupyter Notebook app)
 ```
-jupyter notebook
+Jupyter Notebook
 ```
